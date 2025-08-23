@@ -2,8 +2,6 @@ import { http, createConfig } from "wagmi";
 import { defineChain } from "viem";
 import { walletConnect, injected, coinbaseWallet } from "wagmi/connectors";
 
-const projectId = "your-walletconnect-project-id"; // Replace with your Reown project ID
-
 export const monadTestnet = defineChain({
   id: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
   name: "Monad Testnet",
@@ -19,8 +17,17 @@ export const monadTestnet = defineChain({
 export const config = createConfig({
   chains: [monadTestnet],
   connectors: [
-    walletConnect({ projectId, metadata: { name: "Vibraniom", description: "Music App", url: "https://yourapp.com", icons: [] }, showQrModal: true }),
-    injected(),
+    walletConnect({
+      projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+      metadata: {
+        name: "Vibraniom",
+        description: "Music App",
+        url: process.env.NEXT_PUBLIC_APP_URL || "https://vibraniom-production.up.railway.app",
+        icons: [],
+      },
+      showQrModal: true,
+    }),
+    injected(), // Supports Getpara and other injected wallets
     coinbaseWallet({ appName: "Vibraniom" }),
   ],
   transports: {
