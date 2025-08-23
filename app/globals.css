@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.yin-yang {
+  position: relative;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 50%;
+  background: linear-gradient(to right, #000 50%, #fff 50%);
+  border: 2px solid #000;
+  overflow: hidden;
+}
+
+.yin-yang::before {
+  content: '';
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.yin-yang::after {
+  content: '';
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: #000;
+}
+
+.yin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.yang {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  cursor: pointer;
+}
