@@ -3,7 +3,7 @@ import "./globals.css";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
-import { config } from "../lib/wagmi";
+import { config } from "../config";
 import { Toaster } from "react-hot-toast";
 import Link from "next/link";
 
