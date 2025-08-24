@@ -2,6 +2,8 @@ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { mainnet, arbitrum } from '@reown/appkit/networks'
 import type { AppKitNetwork } from '@reown/appkit/networks'
 import { Chain } from 'viem/chains'
+import { walletConnect, injected, coinbaseWallet } from 'wagmi/connectors'
+import { http, createConfig } from 'wagmi'
 
 // Definir la red Monad Testnet
 export const monadTestnet: Chain = {
@@ -32,11 +34,31 @@ if (!projectId) {
 // Agregar Monad Testnet a la lista de redes
 export const networks = [mainnet, arbitrum, monadTestnet] as [AppKitNetwork, ...AppKitNetwork[]]
 
-// Set up the Wagmi Adapter (Config)
+// Enhanced Wagmi Config with multiple wallet support including Getpara
+export const config = createConfig({
+  chains: [monadTestnet],
+  connectors: [
+    walletConnect({
+      projectId,
+      metadata: {
+        name: "Vibraniom",
+        description: "Music App on Monad",
+        url: process.env.NEXT_PUBLIC_APP_URL || "https://vibraniom-production.up.railway.app",
+        icons: [],
+      },
+      showQrModal: true,
+    }),
+    injected(), // Supports Getpara and other injected wallets
+    coinbaseWallet({ appName: "Vibraniom" }),
+  ],
+  transports: {
+    [monadTestnet.id]: http(process.env.NEXT_PUBLIC_RPC_URL),
+  },
+})
+
+// Keep Reown adapter for additional features
 export const wagmiAdapter = new WagmiAdapter({
   ssr: true,
   projectId,
   networks
 })
-
-export const config = wagmiAdapter.wagmiConfig
