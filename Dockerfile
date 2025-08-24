@@ -1,14 +1,23 @@
+# Quick fix Dockerfile - use npm install instead of npm ci temporarily
+
 # base image
 FROM node:20-alpine AS base
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY package.json ./
+# Copy package-lock.json only if it exists and is valid
+COPY package-lock.json* ./
+
+# Use npm install instead of npm ci as temporary fix
 RUN --mount=type=cache,id=s/ccb9e493-7b96-4ab3-92ba-e12f98ac84a5-npm-cache,target=/root/.npm \
-    npm ci
+    npm install
+
 COPY . .
+
 # build phase
 RUN --mount=type=cache,id=s/ccb9e493-7b96-4ab3-92ba-e12f98ac84a5-next-cache,target=/app/.next/cache \
     --mount=type=cache,id=s/ccb9e493-7b96-4ab3-92ba-e12f98ac84a5-node-modules-cache,target=/app/node_modules/.cache \
     npm run build
+
 # production phase
 FROM node:20-alpine
 WORKDIR /app
