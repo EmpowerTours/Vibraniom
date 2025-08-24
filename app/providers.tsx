@@ -8,7 +8,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Toaster } from 'react-hot-toast';
 import Link from 'next/link';
-import YinYang from '@/yinyang'            // Updated path
+import YinYang from '@/YinYang'            // Updated path
 
 const queryClient = new QueryClient();
 
