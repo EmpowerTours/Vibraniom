@@ -17,8 +17,7 @@ export default function YinYang() {
     setLoading(true);
     try {
       const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`;
-      if (!contractAddress) throw new Error("Contract address not set");
-      
+      if (!contractAddress) throw new Error("Missing contract address");
       if (type === "listener") {
         await writeContract({
           address: contractAddress,
@@ -44,10 +43,14 @@ export default function YinYang() {
   };
 
   return (
-    <div>
-      <button onClick={() => handleRegister("listener")}>Click black (Yin) for Listener</button>
-      <button onClick={() => handleRegister("artist")}>Click white (Yang) for Artist</button>
-      {loading && <p>Loading...</p>}
-    </div>
+    <>
+      <button onClick={() => handleRegister("listener")} className="yin" disabled={loading}>
+        Click black (Yin) for Listener
+      </button>
+      <button onClick={() => handleRegister("artist")} className="yang" disabled={loading}>
+        Click white (Yang) for Artist
+      </button>
+      {loading && <div>Loading...</div>}
+    </>
   );
 }
