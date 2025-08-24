@@ -1,0 +1,27 @@
+name: Generate package-lock.json
+
+on:
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+jobs:
+  generate-lock:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # Match your app's Node version (e.g., 20 from Dockerfile)
+
+      - name: Generate package-lock.json
+        run: npm i --package-lock-only
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add package-lock.json
+          git commit -m "Auto-generate package-lock.json" || echo "No changes to commit"
+          git push
