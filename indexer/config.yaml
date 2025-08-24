@@ -1,12 +1,7 @@
-name: vibraniomindexer
-chain_id: 10143
-rpc_url: https://testnet-rpc.monad.xyz
-hypersync:
-  api_token: c6ddd7fd-82bc-475d-a249-8abd8fc69727
 contracts:
   - name: SimpleVibraniom
     address: 0xFF38c9A0e766Ef4b85A00DD1400e942B49647113
-    abi: ./abis/SimpleVibraniom.json
+    abi: ../abis/SimpleVibraniom.json
     handlers:
       - name: Registered
         handler: handleRegistered
@@ -22,3 +17,5 @@ contracts:
         handler: handleMoodUpdated
       - name: SubscriptionRenewed
         handler: handleSubscriptionRenewed
+      - name: Transfer
+        handler: handleTransfer
