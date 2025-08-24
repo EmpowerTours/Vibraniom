@@ -1,5 +1,4 @@
 "use client";
-
 import { useAccount, useWriteContract } from "wagmi";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -17,9 +16,12 @@ export default function YinYang() {
     if (!address) return toast.error("Connect wallet first");
     setLoading(true);
     try {
+      const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`;
+      if (!contractAddress) throw new Error("Contract address not set");
+      
       if (type === "listener") {
         await writeContract({
-          address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
+          address: contractAddress,
           abi,
           functionName: "registerAsListener",
           value: parseEther("1"),
@@ -27,7 +29,7 @@ export default function YinYang() {
         router.push("/listener");
       } else {
         await writeContract({
-          address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
+          address: contractAddress,
           abi,
           functionName: "registerAsArtist",
         });
@@ -35,19 +37,17 @@ export default function YinYang() {
       }
       toast.success(`Registered as ${type}`);
     } catch (err) {
+      console.error(err);
       toast.error("Registration failed");
     }
     setLoading(false);
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="yin-yang">
-        <div className="yin" onClick={() => handleRegister("listener")}></div>
-        <div className="yang" onClick={() => handleRegister("artist")}></div>
-      </div>
-      <p className="mt-4 text-center">Click black (Yin) for Listener<br />Click white (Yang) for Artist</p>
-      {loading && <p className="mt-2">Loading...</p>}
+    <div>
+      <button onClick={() => handleRegister("listener")}>Click black (Yin) for Listener</button>
+      <button onClick={() => handleRegister("artist")}>Click white (Yang) for Artist</button>
+      {loading && <p>Loading...</p>}
     </div>
   );
 }
