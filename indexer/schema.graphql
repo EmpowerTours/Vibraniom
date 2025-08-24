@@ -1,0 +1,43 @@
+type MusicUploaded @entity {
+  id: String!
+  tokenId: BigInt!
+  title: String!
+  artistName: String!
+  coverImage: String!
+  uri: String!
+  price: BigInt!
+  streamCount: BigInt!
+  artist: String!
+}
+type Registered @entity {
+  id: String!
+  user: String!
+  userType: String!
+}
+type MusicPurchased @entity {
+  id: String!
+  tokenId: BigInt!
+  buyer: String!
+  price: BigInt!
+}
+type MusicStreamed @entity {
+  id: String!
+  tokenId: BigInt!
+  user: String!
+}
+type MusicRated @entity {
+  id: String!
+  tokenId: BigInt!
+  user: String!
+  emoji: Int!
+}
+type MoodUpdated @entity {
+  id: String!
+  user: String!
+  moods: [Int!]!
+}
+type SubscriptionRenewed @entity {
+  id: String!
+  user: String!
+  newEnd: BigInt!
+}
