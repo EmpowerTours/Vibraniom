@@ -2,12 +2,12 @@
 FROM node:20-alpine AS base
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN --mount=type=cache,id=s/<your-service-id>-npm-cache,target=/root/.npm \
+RUN --mount=type=cache,id=s/<1edbcb01-5f61-4917-8efc-614af527f09f>-npm-cache,target=/root/.npm \
     npm ci
 COPY . .
 # build phase
-RUN --mount=type=cache,id=s/<your-service-id>-next-cache,target=/app/.next/cache \
-    --mount=type=cache,id=s/<your-service-id>-node-modules-cache,target=/app/node_modules/.cache \
+RUN --mount=type=cache,id=s/<1edbcb01-5f61-4917-8efc-614af527f09f>-next-cache,target=/app/.next/cache \
+    --mount=type=cache,id=s/<1edbcb01-5f61-4917-8efc-614af527f09f>-node-modules-cache,target=/app/node_modules/.cache \
     npm run build
 # production phase
 FROM node:20-alpine
