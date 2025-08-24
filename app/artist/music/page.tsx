@@ -19,22 +19,36 @@ export default function ArtistMusic() {
 
   useEffect(() => {
     const fetchSongs = async () => {
-  setLoading(true);
-  try {
-    const res = await fetch(process.env.NEXT_PUBLIC_ENVIO_API!, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query: `{ MusicUploaded(where: { artist: "${address}" }) { tokenId title artistName coverImage uri price streamCount } }`,
-      }),
-    });
-    const data = await res.json();
-    setSongs(data.data?.MusicUploaded || []);
-  } catch (err) {
-    toast.error("Failed to fetch music");
-  }
-  setLoading(false);
-};
+      if (!address) return;
+      
+      setLoading(true);
+      try {
+        const res = await fetch(process.env.NEXT_PUBLIC_ENVIO_API!, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: `{ musicUploaded(where: { artist: "${address}" }) { tokenId title artistName coverImage uri price streamCount } }`,
+          }),
+        });
+        
+        if (!res.ok) {
+          console.warn("Envio API not available, using mock data");
+          setSongs([]);
+          setLoading(false);
+          return;
+        }
+        
+        const data = await res.json();
+        setSongs(data.data?.musicUploaded || []);
+      } catch (err) {
+        console.warn("Envio API not available:", err);
+        setSongs([]);
+      }
+      setLoading(false);
+    };
+
+    fetchSongs();
+  }, [address]);
 
   if (!profile || profile[0] !== 2) return <p className="text-center mt-8">Not an artist. Register on the home page.</p>;
 
