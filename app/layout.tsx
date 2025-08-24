@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { Toaster } from "react-hot-toast";
-import Link from "next/link";
+import type { Metadata } from 'next';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { Toaster } from 'react-hot-toast';
+import Link from 'next/link';
+import YinYang from '@/components/YinYang';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Vibraniom App",
-  description: "Music recommendation app on Monad",
+  title: 'Vibraniom App',
+  description: 'Music recommendation app on Monad',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -14,8 +16,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="bg-gray-100">
         <header className="bg-blue-600 text-white p-4">
           <nav className="flex justify-between items-center max-w-4xl mx-auto">
-            <Link href="/" className="text-xl font-bold">Vibraniom</Link>
+            <Link href="/" className="text-xl font-bold">
+              <YinYang />
+            </Link>
             <div className="space-x-4">
+              <ConnectButton />
               <Link href="/listener">Listener</Link>
               <Link href="/artist">Artist Upload</Link>
               <Link href="/artist/music">My Music</Link>
