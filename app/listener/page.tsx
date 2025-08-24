@@ -109,7 +109,7 @@ export default function ListenerDashboard() {
     setLoading(true);
     try {
       await writeContract({
-        address: "0xFF38c9A0e766Ef4b85A00DD1400e942B49647113" as `0x${string}`,
+        address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
         abi,
         functionName: "rateMusic",
         args: [id, emoji],
