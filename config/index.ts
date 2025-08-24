@@ -5,7 +5,7 @@ import { Chain } from 'viem/chains'
 
 // Definir la red Monad Testnet
 export const monadTestnet: Chain = {
-  id: 10143,
+  id: parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || '10143'),
   name: 'Monad Testnet',
   nativeCurrency: {
     name: 'Monad',
@@ -13,8 +13,8 @@ export const monadTestnet: Chain = {
     decimals: 18,
   },
   rpcUrls: {
-    default: { http: ['https://testnet-rpc.monad.xyz/'] },
-    public: { http: ['https://testnet-rpc.monad.xyz/'] },
+    default: { http: [process.env.NEXT_PUBLIC_RPC_URL || 'https://testnet-rpc.monad.xyz/'] },
+    public: { http: [process.env.NEXT_PUBLIC_RPC_URL || 'https://testnet-rpc.monad.xyz/'] },
   },
   blockExplorers: {
     default: { name: 'Monad Explorer', url: 'https://testnet.monadexplorer.com/' },
