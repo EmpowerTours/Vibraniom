@@ -1,0 +1,17 @@
+{
+  "name": "vibraniomindexer",
+  "version": "1.0.0",
+  "description": "Envio indexer for Vibraniom",
+  "scripts": {
+    "codegen": "envio codegen",
+    "start": "envio start"
+  },
+  "dependencies": {
+    "@graphql-tools/schema": "^9.0.0",
+    "graphql": "^16.8.0",
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  }
+}
