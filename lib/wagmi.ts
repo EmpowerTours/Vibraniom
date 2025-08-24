@@ -17,7 +17,7 @@ export const monadTestnet = defineChain({
 
 const { connectors } = getDefaultWallets({
   appName: 'Vibraniom',
-  projectId: 'YOUR_WALLET_CONNECT_PROJECT_ID',  // Add your WalletConnect ID
+  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string,  // Add this
   chains: [monadTestnet],
 });
 
@@ -28,3 +28,4 @@ export const config = createConfig({
     [monadTestnet.id]: http(),
   },
 });
+
