@@ -3,12 +3,12 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import { wagmiConfig } from '@/lib/wagmi'  // This should already work
+import { config } from '@/lib/wagmi';
 import '@rainbow-me/rainbowkit/styles.css';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Toaster } from 'react-hot-toast';
 import Link from 'next/link';
-import YinYang from '@/YinYang'            // Updated path
+import YinYang from '@/components/YinYang';  // Fixed path: '@/components/YinYang'
 
 const queryClient = new QueryClient();
 
