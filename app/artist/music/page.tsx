@@ -19,24 +19,22 @@ export default function ArtistMusic() {
 
   useEffect(() => {
     const fetchSongs = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(process.env.NEXT_PUBLIC_ENVIO_API!, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            query: `{ MusicUploaded(where: { artist: "${address}" }) { tokenId title artistName coverImage uri price streamCount } }`,
-          }),
-        });
-        const data = await res.json();
-        setSongs(data.data?.MusicUploaded || []);
-      } catch (err) {
-        toast.error("Failed to fetch music");
-      }
-      setLoading(false);
-    };
-    if (address) fetchSongs();
-  }, [address]);
+  setLoading(true);
+  try {
+    const res = await fetch(process.env.NEXT_PUBLIC_ENVIO_API!, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: `{ MusicUploaded(where: { artist: "${address}" }) { tokenId title artistName coverImage uri price streamCount } }`,
+      }),
+    });
+    const data = await res.json();
+    setSongs(data.data?.MusicUploaded || []);
+  } catch (err) {
+    toast.error("Failed to fetch music");
+  }
+  setLoading(false);
+};
 
   if (!profile || profile[0] !== 2) return <p className="text-center mt-8">Not an artist. Register on the home page.</p>;
 
