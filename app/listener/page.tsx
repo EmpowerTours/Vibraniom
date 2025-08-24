@@ -24,20 +24,18 @@ export default function ListenerDashboard() {
 
   useEffect(() => {
     const fetchSongs = async () => {
-      try {
-        const res = await fetch(process.env.NEXT_PUBLIC_ENVIO_API!, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ query: "{ MusicUploaded { tokenId title artistName coverImage uri price streamCount } }" }),
-        });
-        const data = await res.json();
-        setSongs(data.data?.MusicUploaded || []);
-      } catch (err) {
-        toast.error("Failed to fetch songs");
-      }
-    };
-    fetchSongs();
-  }, []);
+  try {
+    const res = await fetch(process.env.NEXT_PUBLIC_ENVIO_API!, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: "{ MusicUploaded { tokenId title artistName coverImage uri price streamCount } }" }),
+    });
+    const data = await res.json();
+    setSongs(data.data?.MusicUploaded || []);
+  } catch (err) {
+    toast.error("Failed to fetch songs");
+  }
+};
 
   const handleUpdateMoods = async () => {
     if (!moods) return toast.error("Enter moods");
