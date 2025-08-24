@@ -1,6 +1,6 @@
 import { defineChain } from 'viem'
 import { createConfig, http } from 'wagmi'
-import { walletConnect, injected, coinbaseWallet } from 'wagmi/connectors'
+import { injected } from 'wagmi/connectors'
 
 // Define Monad Testnet
 export const monadTestnet = defineChain({
@@ -20,31 +20,14 @@ export const monadTestnet = defineChain({
   testnet: true,
 })
 
-// Get projectId 
-export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
-
-if (!projectId) {
-  throw new Error('Project ID is not defined')
-}
-
-// Create wagmi config with enhanced wallet support
+// Simple config with just injected wallet (supports Getpara, MetaMask, etc.)
 export const config = createConfig({
   chains: [monadTestnet],
   connectors: [
-    walletConnect({
-      projectId,
-      metadata: {
-        name: "Vibraniom",
-        description: "Music App on Monad",
-        url: process.env.NEXT_PUBLIC_APP_URL || "https://vibraniom-production.up.railway.app",
-        icons: [],
-      },
-      showQrModal: true,
-    }),
     injected(), // Supports Getpara and other injected wallets
-    coinbaseWallet({ appName: "Vibraniom" }),
   ],
   transports: {
     [monadTestnet.id]: http(process.env.NEXT_PUBLIC_RPC_URL),
   },
+  ssr: true,
 })
